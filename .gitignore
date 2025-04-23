@@ -1,9 +1,12 @@
 # Project specific
+
+
 input/
 input - Kopie/
 output/
 
-yolo*.pt
+yolo/
+*.pt
 
 # Windows thumbnail cache files
 Thumbs.db
@@ -204,3 +207,16 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
