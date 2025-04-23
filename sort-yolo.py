@@ -48,7 +48,7 @@ def schaerfe_messung(image_path):
 # === Hauptlauf ===
 for image_path in image_files:
     scharfwert = schaerfe_messung(image_path)
-    new_name = f"S{scharfwert:.0f}__{image_path.name}"
+    new_name = f"S{scharfwert:03.0f}__{image_path.name}"
     new_path = output_dir / new_name
     shutil.copy(image_path, new_path)
     print(f"[OK] {image_path.name} -> {new_name}")
