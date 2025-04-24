@@ -1,5 +1,6 @@
 import cv2
 import shutil
+import torch
 from ultralytics import YOLO
 from pathlib import Path
 
@@ -21,7 +22,9 @@ output_dir = Path("output")
 output_dir.mkdir(parents=True, exist_ok=True)
 
 # === Load model ===
-model = YOLO(model_name)
+device = "cuda" if torch.cuda.is_available() else "cpu"  # Check if GPU is available
+print(f'[INFO] Device used for YOLO: {device.upper()}')
+model = YOLO(model_name).to(device)  # Load the model to GPU if available
 
 # === Image files ===
 image_files = list(input_dir.glob("*.jpg")) + list(input_dir.glob("*.jpeg")) + list(input_dir.glob("*.png"))
