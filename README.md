@@ -7,34 +7,36 @@ This tool is written in Python and is designed to analyze the sharpness of cars 
 ---
 
 ## 🚀 Features
-   
-- ✅ Uses YOLOv8 to detect cars in each image
-- ✅ Measures sharpness (Laplacian variance) of each detected car
-- ✅ Prepends sharpness score to filename (e.g., `S134__IMG001.jpg`)
-- ✅ Saves all renamed images into one single output folder
+
+- ✅ Uses YOLOv8 to detect objects (e.g., cars, people, etc.)
+- ✅ Measures sharpness (Laplacian variance) of each detected object
+- ✅ Prepends the **highest sharpness score** to each filename (e.g., `S134__IMG001.jpg`)
+- ✅ Copies or moves processed images to a single output folder
 - ✅ Supports multiple image formats (`.jpg`, `.jpeg`, `.png`)
-- ✅ Runs on GPU if available (via PyTorch + CUDA)
+- ✅ Utilizes GPU acceleration if available (via PyTorch + CUDA)
 
 ---
 
 ## 🖼️ Example
 
-| Original filename | Detected sharpness | Output filename           |
-|-------------------|--------------------|---------------------------|
-| `IMG_001.jpg`     | `134.23`           | `S134__IMG_001.jpg`      |
-| `trackshot.png`   | `41.87`            | `S041__trackshot.png`     |
+| Original filename | Detected sharpness | Output filename       |
+| ----------------- | ------------------ | --------------------- |
+| `IMG_001.jpg`     | `134.23`           | `S134__IMG_001.jpg`   |
+| `trackshot.png`   | `41.87`            | `S041__trackshot.png` |
 
 ---
 
 ## 📦 Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/sharpness-indexer.git
    cd sharpness-indexer
    ```
 
 2. **Create a virtual environment**
+
    ```bash
    python -m venv yolo
    ```
@@ -42,6 +44,7 @@ This tool is written in Python and is designed to analyze the sharpness of cars 
 3. **Activate the virtual environment**
 
    - On **Windows**:
+
      ```bash
      yolo\Scripts\activate
      ```
@@ -52,7 +55,9 @@ This tool is written in Python and is designed to analyze the sharpness of cars 
      ```
 
 4. **Install dependencies**
+
    > Python 3.9+ and pip required
+
    ```bash
    pip install -r yolo-requirements.txt
    ```
@@ -68,7 +73,7 @@ This tool is written in Python and is designed to analyze the sharpness of cars 
 
 ## 📁 Folder Structure
 
-```
+```txt
 sharpness-indexer/
 ├── input/                   # Put your input images here
 ├── output/                  # Processed images will appear here
@@ -81,32 +86,34 @@ sharpness-indexer/
 
 ## 🧠 How It Works
 
-1. You choose a YOLOv8 model (`n`, `s`, `m`, `l`, `x`) – defaults to `yolov8x.pt`.
+1. You choose a YOLOv8 model (`n`, `s`, `m`, `l`, `x`) – defaults to `x` (`yolov8x.pt`).
 2. The script loads each image from the `input/` folder.
-3. Cars are detected using the YOLO model.
-4. Sharpness is calculated for each detected car using the Laplacian operator.
-5. The image is renamed using the **highest sharpness score** found in any car.
-6. The renamed image is copied or moved to `output/` depending on your choice.
+3. YOLOv8 detects all objects in the image (not limited to cars).
+4. Sharpness is calculated for each object using the Laplacian operator.
+5. The highest sharpness score among all detected objects is used.
+6. The image is renamed using the format: `S{SHARPNESS}__{ORIGINAL_NAME}`.
+7. Depending on your selection, the image is either copied or moved to the `output/` folder.
 
 ---
 
 ## ⚙️ Configuration
 
-| Setting              | Description                                         | Default        |
-|----------------------|-----------------------------------------------------|----------------|
-| YOLOv8 model         | Detection backbone (`n`, `s`, `m`, `l`, `x`)        | `yolov8x.pt`   |
-| Sharpness metric     | Laplacian variance (computed via OpenCV)            | -              |
-| Output format        | `S{SHARPNESS}__{ORIGINALNAME}.{EXT}`                | e.g. `S098__IMG1.jpg` |
-| Input directory      | Folder containing raw images                        | `input/`       |
-| Output directory     | Folder for renamed files                            | `output/`      |
+| Setting          | Description                                  | Default               |
+| ---------------- | -------------------------------------------- | --------------------- |
+| YOLOv8 model     | Detection backbone (`n`, `s`, `m`, `l`, `x`) | `yolov8x.pt`          |
+| Sharpness metric | Laplacian variance (computed via OpenCV)     | -                     |
+| Output format    | `S{SHARPNESS}__{ORIGINALNAME}.{EXT}`         | e.g. `S098__IMG1.jpg` |
+| Input directory  | Folder containing raw images                 | `input/`              |
+| Output directory | Folder for renamed files                     | `output/`             |
 
 ---
 
 ## 📌 Notes
 
-- The tool uses the COCO class index `2` to detect cars.
-- If no car is found in the image, the sharpness score is set to `0.00`.
-- It does **not** modify the original images; it **copies and renames** them.
+- All detected objects (not just cars) are evaluated for sharpness.
+- Sharpness is computed using Laplacian variance via OpenCV.
+- If no object is found, the sharpness is set to `0.00`.
+- Original images remain untouched unless you choose to move them.
 
 ---
 
@@ -123,11 +130,9 @@ sharpness-indexer/
 
 ```bash
 python sort-yolo.py
-```
 
-```
 Choose YOLOv8 model (n = nano, s = small, m = medium, l = large, x = xlarge)
-Model (default: x): 
+Model (default: x):
 [INFO] Using model: yolov8x.pt
 [OK] IMG_001.jpg -> S134__IMG_001.jpg
 [OK] IMG_002.jpg -> S023__IMG_002.jpg
@@ -146,4 +151,3 @@ MIT License © 2025
 Feel free to open an [issue](https://github.com/saminitz/Sharpness-Indexer/issues) if you have suggestions or questions!
 
 ---
-
