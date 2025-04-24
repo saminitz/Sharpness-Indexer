@@ -49,7 +49,7 @@ processed_paths = []
 for image_path in image_files:
     sharpness_value = measure_sharpness(image_path)
     sharpness_int = int(round(sharpness_value))
-    new_filename = f"S{sharpness_int}__{image_path.name}"
+    new_filename = f"S{sharpness_int:03d}__{image_path.name}"
     new_path = output_dir / new_filename
     processed_paths.append((image_path, new_path))
     print(f"[OK] {image_path.name} -> {new_filename}")
