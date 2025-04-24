@@ -64,12 +64,12 @@ sharpness-indexer/
 
 ## 🧠 How It Works
 
-1. You choose a YOLOv8 model (`n`, `s`, `m`, `l`, `x`) – defaults to `yolov8m.pt`.
+1. You choose a YOLOv8 model (`n`, `s`, `m`, `l`, `x`) – defaults to `yolov8x.pt`.
 2. The script loads each image from the `input/` folder.
 3. Cars are detected using the YOLO model.
 4. Sharpness is calculated for each detected car using the Laplacian operator.
 5. The image is renamed using the **highest sharpness score** found in any car.
-6. The renamed image is copied to `output/`.
+6. The renamed image is copied or moved to `output/` depending on your choice.
 
 ---
 
@@ -77,7 +77,7 @@ sharpness-indexer/
 
 | Setting              | Description                                         | Default        |
 |----------------------|-----------------------------------------------------|----------------|
-| YOLOv8 model         | Detection backbone (`n`, `s`, `m`, `l`, `x`)        | `yolov8m.pt`   |
+| YOLOv8 model         | Detection backbone (`n`, `s`, `m`, `l`, `x`)        | `yolov8x.pt`   |
 | Sharpness metric     | Laplacian variance (computed via OpenCV)            | -              |
 | Output format        | `S{SHARPNESS}__{ORIGINALNAME}.{EXT}`                | e.g. `S098__IMG1.jpg` |
 | Input directory      | Folder containing raw images                        | `input/`       |
@@ -110,8 +110,8 @@ python sort-yolo.py
 
 ```
 Choose YOLOv8 model (n = nano, s = small, m = medium, l = large, x = xlarge)
-Model (default: m): 
-[INFO] Using model: yolov8m.pt
+Model (default: x): 
+[INFO] Using model: yolov8x.pt
 [OK] IMG_001.jpg -> S134__IMG_001.jpg
 [OK] IMG_002.jpg -> S023__IMG_002.jpg
 ```
@@ -129,3 +129,4 @@ MIT License © 2025
 Feel free to open an [issue](https://github.com/saminitz/Sharpness-Indexer/issues) if you have suggestions or questions!
 
 ---
+
