@@ -1,8 +1,5 @@
 import cv2
-import numpy as np
-import os
 import shutil
-import platform
 from ultralytics import YOLO
 from pathlib import Path
 
@@ -11,6 +8,12 @@ print("Choose YOLOv8 model: (n = nano, s = small, m = medium, l = large, x = xla
 model_choice = input("Model (default: x): ").strip().lower() or "x"
 model_name = f"yolov8{model_choice}.pt"
 print(f"[INFO] Using model: {model_name}")
+
+# === File action choice ===
+print("\nWhat should happen to the processed images in the end?")
+print("1 = Copy to output folder")
+print("2 = Move to output folder (remove from input folder)")
+file_action_choice = input("Selection (default: 1): ").strip() or "1"
 
 # === Paths ===
 input_dir = Path("input")
@@ -49,9 +52,7 @@ def measure_sharpness(image_path):
         print(f"[DEBUG] Detected '{cls_name}' with sharpness: {sharpness:.2f}")
         
         max_sharpness = max(max_sharpness, sharpness)
-
     return max_sharpness
-
 
 # === Process images ===
 processed_paths = []
@@ -63,14 +64,9 @@ for image_path in image_files:
     processed_paths.append((image_path, new_path))
     print(f"[OK] {image_path.name} -> {new_filename}")
 
-# === Final action choice ===
-print("\nWhat should happen to the processed images?")
-print("1 = Copy to output folder")
-print("2 = Move to output folder (remove from input folder)")
-final_choice = input("Selection (default: 1): ").strip() or "1"
-
+# === Move or copy files ===
 for src, dst in processed_paths:
-    if final_choice == "2":
+    if file_action_choice == "2":
         shutil.move(src, dst)
     else:
         shutil.copy(src, dst)
