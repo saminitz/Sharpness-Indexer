@@ -1,11 +1,13 @@
 # Sharpness Indexer
 
-**Sharpness Indexer** is a Python tool that analyzes the sharpness of cars in high-resolution images even where the background is blurry ex. in panning shots using YOLOv8 and Laplacian variance. It automatically detects cars, measures their sharpness, and renames each image file by prepending the sharpness value. All processed images are then saved to a single output folder.
+**Sharpness Indexer** was born out of a need to save time after motorsport photography sessions. When capturing panning shots—where you follow a moving car and take bursts of images—you often end up with hundreds of pictures, many of which are blurry or imperfect due to motion. Reviewing each photo manually to find the sharp ones, where the car is properly captured, can be extremely time-consuming. This script was created to automate that process.
+
+This tool is written in Python and is designed to analyze the sharpness of cars in high-resolution images, even when the background is blurry—as is typical in panning shots. It uses YOLOv8 to detect cars and Laplacian variance to evaluate image sharpness. Once processed, each image is renamed with a prepended sharpness value, and all images are saved to a single output folder.
 
 ---
 
 ## 🚀 Features
-
+   
 - ✅ Uses YOLOv8 to detect cars in each image
 - ✅ Measures sharpness (Laplacian variance) of each detected car
 - ✅ Prepends sharpness score to filename (e.g., `S134__IMG001.jpg`)
