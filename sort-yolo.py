@@ -57,7 +57,7 @@ for image_path in image_files:
 # === Final action choice ===
 print("\nWhat should happen to the processed images?")
 print("1 = Copy to output folder")
-print("2 = Move to output folder (remove from input)")
+print("2 = Move to output folder (remove from input folder)")
 final_choice = input("Selection (default: 1): ").strip() or "1"
 
 for src, dst in processed_paths:
