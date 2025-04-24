@@ -74,7 +74,7 @@ sharpness-indexer/
 ├── output/                  # Processed images will appear here
 ├── README.md                # This file
 ├── sort-yolo.py             # Main script
-├── yolo-requirements.txt    # This file
+├── yolo-requirements.txt    # Requirements for `sort-yolo.py`
 ```
 
 ---
