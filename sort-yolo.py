@@ -8,7 +8,7 @@ from pathlib import Path
 
 # === Eingabe: Modellwahl mit Standard ===
 print("Wähle YOLOv8-Modell (n = nano, s = small, m = medium, l = large, x = xlarge)")
-modellwahl = input("Modell (Standard: s): ").strip().lower() or "s"
+modellwahl = input("Modell (Standard: m): ").strip().lower() or "m"
 modellname = f"yolov8{modellwahl}.pt"
 print(f"[INFO] Benutze Modell: {modellname}")
 
@@ -21,7 +21,6 @@ output_dir.mkdir(parents=True, exist_ok=True)
 model = YOLO(modellname)
 
 # === Konfiguration ===
-SCHAERFE_GRENZE = 100.0  # nur noch informativ
 image_files = list(input_dir.glob("*.jpg")) + list(input_dir.glob("*.jpeg")) + list(input_dir.glob("*.png"))
 
 # === Schärfewert ermitteln ===
