@@ -34,13 +34,30 @@ This tool is written in Python and is designed to analyze the sharpness of cars 
    cd sharpness-indexer
    ```
 
-2. **Install dependencies**
+2. **Create a virtual environment**
+   ```bash
+   python -m venv yolo
+   ```
+
+3. **Activate the virtual environment**
+
+   - On **Windows**:
+     ```bash
+     yolo\Scripts\activate
+     ```
+
+   - On **macOS/Linux**:
+     ```bash
+     source yolo/bin/activate
+     ```
+
+4. **Install dependencies**
    > Python 3.9+ and pip required
    ```bash
    pip install -r yolo-requirements.txt
    ```
 
-3. **Optional: Check for GPU availability**
+5. **Optional: Check for GPU availability**
    ```python
    import torch
    print(torch.cuda.is_available())
