@@ -23,26 +23,35 @@ model = YOLO(model_name)
 # === Image files ===
 image_files = list(input_dir.glob("*.jpg")) + list(input_dir.glob("*.jpeg")) + list(input_dir.glob("*.png"))
 
-# === Function: Measure sharpness of detected car in image ===
+# === Function: Measure sharpness of detected objects in image ===
 def measure_sharpness(image_path):
     img = cv2.imread(str(image_path))
     results = model(img)
 
-    # Class 2 = car in COCO dataset
-    cars = [box for box in results[0].boxes if int(box.cls[0]) == 2]
-    if not cars:
-        print(f"[INFO] No car detected in {image_path.name}")
+    # Class name mapping from COCO
+    class_names = model.names  # e.g., {0: 'person', 1: 'bicycle', 2: 'car', ...}
+
+    object_boxes = [box for box in results[0].boxes]
+    if not object_boxes:
+        print(f"[INFO] No object detected in {image_path.name}")
         return 0.0
 
     max_sharpness = 0.0
-    for box in cars:
+    for box in object_boxes:
         x1, y1, x2, y2 = map(int, box.xyxy[0])
-        car_crop = img[y1:y2, x1:x2]
-        gray = cv2.cvtColor(car_crop, cv2.COLOR_BGR2GRAY)
+        cls_id = int(box.cls[0])
+        cls_name = class_names.get(cls_id, f"Unknown({cls_id})")
+        
+        object_crop = img[y1:y2, x1:x2]
+        gray = cv2.cvtColor(object_crop, cv2.COLOR_BGR2GRAY)
         sharpness = cv2.Laplacian(gray, cv2.CV_64F).var()
+        
+        print(f"[DEBUG] Detected '{cls_name}' with sharpness: {sharpness:.2f}")
+        
         max_sharpness = max(max_sharpness, sharpness)
 
     return max_sharpness
+
 
 # === Process images ===
 processed_paths = []

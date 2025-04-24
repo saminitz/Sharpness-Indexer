@@ -4,6 +4,7 @@
 input/
 input - Kopie/
 output/
+sharpness_comparison
 
 yolo/
 *.pt
