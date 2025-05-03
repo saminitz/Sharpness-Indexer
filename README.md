@@ -38,7 +38,7 @@ This tool is written in Python and is designed to analyze the sharpness of cars 
 2. **Create a virtual environment**
 
    ```bash
-   python -m venv yolo
+   python3 -m venv yolo
    ```
 
 3. **Activate the virtual environment**
@@ -129,7 +129,7 @@ sharpness-indexer/
 ## ✅ Example Run
 
 ```bash
-python sort-yolo.py
+python3 sort-yolo.py
 
 Choose YOLOv8 model (n = nano, s = small, m = medium, l = large, x = xlarge)
 Model (default: x):
