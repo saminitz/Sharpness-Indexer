@@ -1,4 +1,5 @@
 import cv2
+import re
 import shutil
 import torch
 from ultralytics import YOLO
@@ -27,7 +28,7 @@ print(f'[INFO] Device used for YOLO: {device.upper()}')
 model = YOLO(model_name).to(device)  # Load the model to GPU if available
 
 # === Image files ===
-image_files = list(input_dir.glob("*.jpg")) + list(input_dir.glob("*.jpeg")) + list(input_dir.glob("*.png"))
+image_files = [file for file in input_dir.iterdir() if re.search(r'\.(jpg|jpeg|png)$', file.suffix, re.IGNORECASE)]
 
 # === Function: Measure sharpness of detected objects in image ===
 def measure_sharpness(image_path):
