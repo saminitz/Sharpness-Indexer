@@ -4,6 +4,16 @@ import shutil
 import torch
 from ultralytics import YOLO
 from pathlib import Path
+import sys
+
+# === Paths from arguments ===
+if len(sys.argv) < 2:
+    print("Usage: python sort-yolo.py <input_folder> [output_folder]")
+    sys.exit(1)
+
+input_dir = Path(sys.argv[1])
+output_dir = Path(sys.argv[2]) if len(sys.argv) > 2 else input_dir
+output_dir.mkdir(parents=True, exist_ok=True)
 
 # === Model selection with default ===
 print("Choose YOLOv8 model: (n = nano, s = small, m = medium, l = large, x = xlarge)")
@@ -15,12 +25,8 @@ print(f"[INFO] Using model: {model_name}")
 print("\nWhat should happen to the processed images in the end?")
 print("1 = Copy to output folder")
 print("2 = Move to output folder (remove from input folder)")
+print("3 = Create shortcuts in output folder")
 file_action_choice = input("Selection (default: 1): ").strip() or "1"
-
-# === Paths ===
-input_dir = Path("input")
-output_dir = Path("output")
-output_dir.mkdir(parents=True, exist_ok=True)
 
 # === Load model ===
 device = "cuda" if torch.cuda.is_available() else "cpu"  # Check if GPU is available
@@ -68,10 +74,12 @@ for image_path in image_files:
     processed_paths.append((image_path, new_path))
     print(f"[OK] {image_path.name} -> {new_filename}")
 
-# === Move or copy files ===
+# === Move, copy, or create shortcuts ===
 for src, dst in processed_paths:
     if file_action_choice == "2":
         shutil.move(src, dst)
+    elif file_action_choice == "3":
+        dst.symlink_to(src)
     else:
         shutil.copy(src, dst)
 
